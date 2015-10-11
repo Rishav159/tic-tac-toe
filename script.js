@@ -4,29 +4,8 @@ var turn = 0 ;
 var gameFinished =1;
 var single;
 
-var displayboard = function(board)
-{
-	    //cout<<"\n Display board called";
-	    var i ,j;
-	    for(i=0;i<3;i++)
-	    {
-	        for(j=0;j<3;j++)
-	        {
-	            if(board[i][j]=='e')
-	                console.log("e");
-	            else
-	                console.log(board[i][j]);
-	            if(j!=2)
-	                console.log(" : ");
-	        }
-	        if(i!=2)
-	            console.log("\n-----------");
-	    }
-	    console.log("\n");
-};
 var choice = function(board,empty,s,tur)
 {
-	//console.log("Choice called with empty = " + empty);
 	var i,j,pos=0,max=-10,min=10;
 	var t;
 	if(s==='p')
@@ -36,7 +15,6 @@ var choice = function(board,empty,s,tur)
 	else {
 		t='p';
 	}
-	//displayboard(board);
 	for(i=0;i<3;i++)
 	{
 		for(j=0;j<3;j++)
@@ -45,7 +23,6 @@ var choice = function(board,empty,s,tur)
 			{
 				board[i][j]=s;
 				k=score(board,t,empty-1,tur);
-				//console.log("Score was found to be " + k);
 				board[i][j]='e';
 				if(tur===s)
 				{
@@ -73,41 +50,27 @@ var choice = function(board,empty,s,tur)
 
 var checkwinner = function(board)
 {
-   // cout<<"\n Check winner called ";
     if(board[0][0]===board[0][1] && board[0][1]===board[0][2] && board[0][0]!=='e')
         return board[0][0];
-   // cout<<"\n First";
-    /*if(board[1][0]==board[1][1] && board[1][1]==board[1][2])
-        if(board[1][0]!='e')
-            cout<<"\n Blah";*/
     if(board[1][0]===board[1][1] && board[1][1]===board[1][2] && board[1][0]!=='e')
         return board[1][0];
-   // cout<<"\n Second";
     if(board[2][0]===board[2][1] && board[2][1]===board[2][2] && board[2][0]!=='e')
         return board[2][0];
-   // cout<<"\n Third";
     if(board[0][0]===board[1][0] && board[1][0]===board[2][0] && board[0][0]!=='e')
         return board[0][0];
-   // cout<<"\n Forth";
-    if(board[0][1]===board[1][1] && board[1][1]===board[2][1] && board[0][1]!=='e')
+	     if(board[0][1]===board[1][1] && board[1][1]===board[2][1] && board[0][1]!=='e')
         return board[0][1];
-    //cout<<"\n Fifth";
     if(board[0][2]===board[1][2] && board[1][2]===board[2][2] && board[0][2]!=='e')
         return board[0][2];
-   // cout<<"\n Sixth";
     if(board[0][0]===board[1][1] && board[1][1]===board[2][2] && board[0][0]!=='e')
         return board[0][0];
-   // cout<<"\n Seventh";
     if(board[0][2]===board[1][1] && board[1][1]===board[2][0] && board[0][2]!=='e')
         return board[0][2];
-   // cout<<"\n Eight";
     return 'f';
 };
 var score = function( board , s ,empty , tur)
 {
-		//console.log("Function score called with empty = " + empty);
     var win=checkwinner(board);
-		//console.log(" win is " + win + " tur is " + tur);
     if(win==='p' && tur==='p')
         {  return 10;}
     else if(win==='c' && tur==='c')
@@ -184,10 +147,6 @@ else
 	p1 = new Player(prompt("Enter First Player's name !"));
 	p2 = new Player(prompt("Enter Second Player's name !"));
 }
-//p2 = new Player(prompt("Enter second player's name !"));
-
-//p1 = new Player("Player1");
-
 
 var ifNotPresent = function (cellID) {
 	for (var i = 0; i < played.length ; i++) {
@@ -315,5 +274,4 @@ jQuery(document).ready(function($) {
 			checkForWinner();
 		}
 	});
-
 });
