@@ -2,7 +2,7 @@
 var played = [];
 var turn = 0 ;
 var gameFinished =1;
-
+var single;
 
 var displayboard = function(board)
 {
@@ -173,12 +173,21 @@ function Player (name) {
 	this.name = name ;
 	this.moves = new Array() ;
 };
-
-p1 = new Player(prompt("Enter first player's name !"));
+single = confirm("Do you want to play single player game ? ");
+if(single)
+{
+	p1 = new Player(prompt("Enter Player's name !"));
+	p2 = new Player("Computer");
+}
+else
+{
+	p1 = new Player(prompt("Enter First Player's name !"));
+	p2 = new Player(prompt("Enter Second Player's name !"));
+}
 //p2 = new Player(prompt("Enter second player's name !"));
 
 //p1 = new Player("Player1");
-p2 = new Player("Computer");
+
 
 var ifNotPresent = function (cellID) {
 	for (var i = 0; i < played.length ; i++) {
@@ -274,20 +283,34 @@ jQuery(document).ready(function($) {
     board[i]=new Array(3);
 	initializeboard(board);
 	$('.cell').click(function(){
-		turn =0;
+		if(single)
+			turn =0;
 		if (ifNotPresent(this.id) && gameFinished){
-			$(this).append("<img src=\'cross.png\' id=\'symbol\'>");
-			k=getno(this.id);
-			board[Math.floor(k/3)][k%3]='p';
-			empty--;
-			k=choice(board,empty , 'c' ,'c');
-			turn=1;
-			board[Math.floor(k/3)][k%3]='c';
-			empty--;
-			temp = getid(k);
-			element = document.getElementById(temp);
-			if (ifNotPresent(element.id) && gameFinished){
-				$(element).append("<img src=\'circle.png\' id=\'symbol\'>");
+			if(single)
+			{
+				$(this).append("<img src=\'cross.png\' id=\'symbol\'>");
+				k=getno(this.id);
+				board[Math.floor(k/3)][k%3]='p';
+				empty--;
+				turn = 1;
+				k=choice(board,empty , 'c' ,'c');
+				board[Math.floor(k/3)][k%3]='c';
+				empty--;
+				temp = getid(k);
+				element = document.getElementById(temp);
+				if (ifNotPresent(element.id) && gameFinished){
+					$(element).append("<img src=\'circle.png\' id=\'symbol\'>");
+				}
+			}
+			else
+			{
+				if (turn) {
+				$(this).append("<img src=\'circle.png\' id=\'symbol\'>");
+				turn = 0 ;
+			} else{
+				turn = 1 ;
+				$(this).append("<img src=\'cross.png\' id=\'symbol\'>");
+			}
 			}
 			checkForWinner();
 		}
